@@ -1,3 +1,5 @@
+The information in this document refers to announcement mining (also known as "ann mining", "pkt mining" or just "mining").
+
 ## How to Announcement mine (ann mine)
 
 There are a number of options available when it comes to installing the PacketCrpyt announcement miner. Choose whichever best suits your technical ability:

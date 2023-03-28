@@ -1,8 +1,10 @@
 # Mining
 
-PacketCrypt is a _bandwidth hard proof of work_, this means it requires lots of bandwidth to mine.
-Miners collaborate with one another by sending small messages (called _Announcements_ (often referred to as "anns")) and the
-sending of these messages requires a large amount of _bandwidth_.
+PKT is mined using PacketCrypt.
+
+PacketCrypt is a bandwidth hard proof of work, this means it requires lots of bandwidth to mine.
+Miners collaborate with one another by sending small pieces of data (called Announcements (often referred to as "anns")) and the
+sending of these announcements requires a large amount of bandwidth.
 
 Miners who are working in collaboration with one another are members of a mining pool, therefore
 all mining of PacketCrypt utilises mining pools.

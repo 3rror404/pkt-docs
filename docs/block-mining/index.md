@@ -1,24 +1,26 @@
+The information in this document refers to block mining (also known as "running a pool" or "solo mining"). It is very important not to confuse block mining with mining (announcement mining).
+
 ## Block Mining & Running a Pool
 
-Because each block miner must use as much bandwidth as all of the announcement miners _combined_,
+Because each block miner must use as much bandwidth as all of the announcement miners combined,
 block mining is typically done at the location of the pool. Even a pool operator who wanted to
-support external block mining would find that the pool itself would need enough _upload_ bandwidth
+support external block mining would find that the pool itself would need enough upload bandwidth
 to match all of the block miners - which would be completely untenable. If you are interested
 in block mining, contact the pool operator and discuss sending hardware to their location.
 
 Starting your own pool requires setting up a number of services:
 
-- _pktd node_ (one or more) - One pktd instance is required for the Master to function, each of the
-  _Block Handlers_ may optionally use separate pktd nodes.
-- _Master_ (one) - This node coordinates all of the others and provides work files and configuration
-- _Ann Handler_ (one or more) - These are high performance nodes which accept announcements from the
+- pktd node (one or more) - One pktd instance is required for the Master to function, each of the
+  Block Handlers may optionally use separate pktd nodes.
+- Master (one) - This node coordinates all of the others and provides work files and configuration
+- Ann Handler (one or more) - These are high performance nodes which accept announcements from the
   announcement miners in the network, they also provide announcements to the block miners. As you
   scale up the amount of bandwidth in the pool, you will need to add more Ann handlers.
-- _Block Miner_ (one or more) - These nodes download announcements from the announcement handlers and
+- Block Miner (one or more) - These nodes download announcements from the announcement handlers and
   use them in the mining process to mine blocks.
-- _Block Handlers_ (one or more) - These nodes receive "block shares" from the block miners and
+- Block Handlers (one or more) - These nodes receive "block shares" from the block miners and
   submit blocks if
-- _Paymaker_ (1) - This node receives updates from the Ann Handlers and Block Handlers and keeps
+- Paymaker (1) - This node receives updates from the Ann Handlers and Block Handlers and keeps
   track of who should be paid. The Paymaker sends configuration to the pktd node which is used by the
   Master in order to make the pool pay out the announcement and block miners
 
