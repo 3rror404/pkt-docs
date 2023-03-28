@@ -24,9 +24,11 @@
   <link
     href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin'
     rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap" rel="stylesheet">
   <link href="{{ 'css/bootstrap-custom.css'|url }}" rel="stylesheet">
   <link href="{{ 'css/base.css'|url }}" rel="stylesheet">
   <link href="{{ 'css/pkt.css'|url }}" rel="stylesheet">
+  <link href="{{ 'css/pkt-watch-custom.css'|url }}" rel="stylesheet">
 
   {% if config.theme.highlightjs is defined and config.theme.highlightjs is sameas false %}
 
@@ -53,6 +55,67 @@
 </head>
 
 <body{% if page and page.is_homepage %} class="homepage" {% endif %}>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="height: 0; width: 0; position: absolute; visibility: hidden">
+  <symbol id="svg-cube-solid-blue" x="0" y="0" style="enable-background:new 0 0 80 92" version="1.1" viewBox="0 0 80 92">
+      <path id="svg-cube-solid-blue-right-back" d="M80 69V23L40 0v46z" class="st0" style="fill:#14bff4"></path>
+      <path id="svg-cube-solid-blue-left-back" d="m0 69 40-23V0L0 23z" class="st0" style="fill:#14bff4"></path>
+      <path id="svg-cube-solid-blue-bottom" d="m0 69 40-23 40 23-40 23z" class="st0" style="fill:#14bff4"></path>
+      <path id="svg-cube-solid-blue-right-front" d="M80 23v46L40 92V46z" style="fill:#00adee"></path>
+      <path id="svg-cube-solid-blue-left-front" d="M0 23v46l40 23V46z" style="fill:#009ece"></path>
+      <path id="svg-cube-solid-blue-top" d="M0 23 40 0l40 23-40 23z" style="fill:#14bff4"></path>
+  </symbol>
+
+  <symbol id="svg-cube-solid-grey" x="0" y="0" style="enable-background:new 0 0 80 92" version="1.1" viewBox="0 0 80 92">
+      <path id="svg-cube-solid-grey-right-back" d="M80 69V23L40 0v46z" class="st0" style="fill:#e5e5e5"></path>
+      <path id="svg-cube-solid-grey-left-back" d="m0 69 40-23V0L0 23z" class="st0" style="fill:#e5e5e5"></path>
+      <path id="svg-cube-solid-grey-bottom" d="m0 69 40-23 40 23-40 23z" class="st0" style="fill:#e5e5e5"></path>
+      <path id="svg-cube-solid-grey-right-front" d="M80 23v46L40 92V46z" style="fill:#e5e5e5"></path>
+      <path id="svg-cube-solid-grey-left-front" d="M0 23v46l40 23V46z" style="fill:#d3d3d3"></path>
+      <path id="svg-cube-solid-grey-top" d="M0 23 40 0l40 23-40 23z" style="fill:#fff"></path>
+  </symbol>
+</svg>
+
+<div class="header">
+  <div class="logo">
+      <a href="/">
+          <div class="cube-logo">
+              <div class="text-logo small text-logo-loop-anim">
+                  <div class="cubes">
+                      <div class="cube cube-1">
+                          <svg class="icon"><use href="#svg-cube-solid-grey"></use></svg>
+                      </div>
+                      <div class="cube cube-2">
+                          <svg class="icon"><use href="#svg-cube-solid-grey"></use></svg>
+                      </div>
+                      <div class="cube cube-3">
+                          <svg class="icon"><use href="#svg-cube-solid-grey"></use></svg>
+                      </div>
+                      <div class="cube cube-4">
+                          <svg class="icon"><use href="#svg-cube-solid-grey"></use></svg>
+                      </div>
+
+                      <div class="cube cube-5">
+                          <svg class="icon"><use href="#svg-cube-solid-blue"></use></svg>
+                      </div>
+                      <div class="cube cube-6">
+                          <svg class="icon"><use href="#svg-cube-solid-blue"></use></svg>
+                      </div>
+                      <div class="cube cube-7">
+                          <svg class="icon"><use href="#svg-cube-solid-blue"></use></svg>
+                      </div>
+                  </div>
+                  <div class="text">
+                      <span>PKT</span><span class="text-brand">WATCH</span>
+                  </div>
+              </div>
+          </div>
+      </a>
+  </div>
+  <div class="title">
+      <h1>PKT Documentation</h1>
+  </div>
+</div>
 
   <header class="header">
     <div class="c-navigation__top">

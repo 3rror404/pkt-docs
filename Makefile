@@ -9,6 +9,7 @@ cssmin: pkt/css/base.css pkt/css/bootstrap-custom.css pkt/css/pkt.css pkt/css/hi
 	uglifycss pkt/css/bootstrap-custom.css > pkt/css/bootstrap-custom.min.css
 	uglifycss pkt/css/pkt.css > pkt/css/pkt.min.css
 	uglifycss pkt/css/highlight.css > pkt/css/highlight.min.css
+	uglifycss pkt/css/pkt-watch-custom.css > pkt/css/pkt-watch-custom.min.css
 
 dist:
 	python3 setup.py sdist bdist_wheel
