@@ -1,3 +1,5 @@
+The information in this document refers to block mining (also known as "running a pool" or "solo mining"). It is very important not to confuse block mining with mining (announcement mining). This information is only relevant to people how specifically want to know how to run a mining pool. It is not relevant to people how want to mine PKT cash.
+
 # **Setting up a Pool**
 
 ### Expectations
