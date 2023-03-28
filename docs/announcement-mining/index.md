@@ -138,12 +138,13 @@ pool_1 is the pool running the highest difficulty. If you notice problems, you c
 
 ## Choosing Pools to mine in
 
-You can mine in as many pools as you have the bandwidth to supply. The same data will be uploaded so your CPU is only used once. Currently the pools which are regularly winning blocks include:
+You can mine in as many pools as you have the bandwidth to supply. The same data will be uploaded to each of the pools so your CPU is only used once. 
 
-- Pkteer: `http://pool.pkteer.com`
-- PKTPool: `http://pool.pktpool.io`
-- PktWorld: `http://pool.pkt.world`
-- Zetahash (f.k.a. Srizbi): `https://stratum.zetahash.com`
+The available mining pools are listed below:
+Pkteer: `http://pool.pkteer.com`
+PKTPool: `http://pool.pktpool.io`
+PktWorld: `http://pool.pkt.world`
+Zetahash (f.k.a. Srizbi): `https://stratum.zetahash.com`
 
 In general the recommendation is to list the pool with highest difficulty in the first position to ensure your announcements will be accepted, as the standardized policy is to accept announcements of a higher difficulty for pools with a lower base difficulty. In some cases the rewards might vary depending on the pool order regardless of difficulty, subject to custom policies implemented by the respective pools.
 
