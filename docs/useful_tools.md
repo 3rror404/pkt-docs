@@ -26,7 +26,7 @@ Estimate performance and potential PKT Cash announcement miner earnings for a hu
 
 ### Mining Tools
 ### [Minr](https://pkt.watch/minr/)
-A simple to use GUI for PacketCrypt. Available on MacOS, Windows and Linux.
+Minr is a simple to use GUI for PacketCrypt that is built by pkt.watch. Available on MacOS, Windows and Linux. It is the easiest way to start mining PKT and can be downloaded from https://pkt.watch/minr/
 
 ### [Configuration Generator](https://config.pkt.watch/)
 Quickly generate and download a PacketCrypt config.json file.

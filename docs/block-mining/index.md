@@ -1,0 +1,121 @@
+## Block Mining & Running a Pool
+
+Because each block miner must use as much bandwidth as all of the announcement miners _combined_,
+block mining is typically done at the location of the pool. Even a pool operator who wanted to
+support external block mining would find that the pool itself would need enough _upload_ bandwidth
+to match all of the block miners - which would be completely untenable. If you are interested
+in block mining, contact the pool operator and discuss sending hardware to their location.
+
+Starting your own pool requires setting up a number of services:
+
+- _pktd node_ (one or more) - One pktd instance is required for the Master to function, each of the
+  _Block Handlers_ may optionally use separate pktd nodes.
+- _Master_ (one) - This node coordinates all of the others and provides work files and configuration
+- _Ann Handler_ (one or more) - These are high performance nodes which accept announcements from the
+  announcement miners in the network, they also provide announcements to the block miners. As you
+  scale up the amount of bandwidth in the pool, you will need to add more Ann handlers.
+- _Block Miner_ (one or more) - These nodes download announcements from the announcement handlers and
+  use them in the mining process to mine blocks.
+- _Block Handlers_ (one or more) - These nodes receive "block shares" from the block miners and
+  submit blocks if
+- _Paymaker_ (1) - This node receives updates from the Ann Handlers and Block Handlers and keeps
+  track of who should be paid. The Paymaker sends configuration to the pktd node which is used by the
+  Master in order to make the pool pay out the announcement and block miners
+
+## PacketCrypt Data Flow
+
+![packetcrypt_data_flow](./packetcrypt_data_flow.png)
+
+- <span style="color:#ff9900">█</span> Orange: Announcements are sent from the Announcement miners
+  to the Ann Handlers and then to the Block miners
+- <span style="color:#0000ff">█</span> Blue: Block shares are sent from block miners to Block
+  Handler(s)
+- <span style="color:#9900ff">█</span> Purple: Winning blocks are submitted by the Block Handler(s)
+  to pktd and the PKT network
+- <span style="color:#ff00ff">█</span> Pink: Block Handlers and Ann Handlers inform Paymaker of work
+  done by announcement and block miners
+- <span style="color:#6aa84f">█</span> Green: Paymaker configures pktd instance to create blocks
+  which pay the people who have been mining
+- <span style="color:#783f04">█</span> Brown: Master gets block templates from pktd instance
+- Black dotted line: All nodes request configuration and block templates from Master node
+
+## More Information and PacketCrypt Pool Code
+
+The code and documentation for running a pool is available on the **C / nodejs** version of the
+[PacketCrypt](https://github.com/cjdelisle/PacketCrypt/blob/master/docs/pool.md) project,
+the new Rust version only contains Announcement Miner and Announcement Handlers.
+
+## Announcement Difficulty
+
+PacketCrypt is designed in such a way that a mining pool can double its effective power by:
+
+- Doubling the total block mining computation effort
+- Doubling the total announcement mining computation effort, or
+- Doubling the amount of bandwidth between announcement miners and the pool
+
+The way that a pool operator limits the amount of bandwidth flowing into the pool, to prevent
+overloading of the network, is by setting what is known as the _announcement difficulty_. The
+announcement difficulty for a pool specifies how much work must be done on an announcement in order
+for the announcement to be accepted and paid out by the pool. Announcement difficulty serves to
+slow down the announcement miners to protect the pool's network.
+
+In general, doubling the announcement difficulty will halve the amount of bandwidth used by the
+pool and will also halve the pool's overall mining power, with a limit that setting the announcement
+difficulty lower than `2` does not bring any additional value. To explain why it works like this,
+we need to examine the PacketCrypt algorithm rules and the in particular how the block mining software
+decides which announcements to use when attempting to mine a block.
+
+### Announcement Set Selection
+
+PacketCrypt algorithm allows block miners to perform less work if they are able to prove that they
+had a certain number of "high value" announcements in memory at the time of mining, the exact ratio
+of actual work a block miner must do to the amount of work the PKT blockchain requires is called the
+_power multipler_.
+
+For a block miner seeking to optimize their power multiplier, every announcement has a particular
+level of utility value which is based on the amount of work that was done by the announcement miner
+(announcement difficulty) _and_ how old the announcement is. We call this the _effective difficulty_.
+
+The effective difficulty of an announcement starts off as the actual difficulty of the work done to
+mine it and then decreases by half every block-period until it is less than 1 and the announcement
+is no longer usable for mining.
+
+The block mining software selects a subset of announcements which which will give it the best
+power multiplier based on the PacketCrypt algorithm:
+
+    power_multiplier = min(effective_difficulty) * ann_count ** 2
+
+The `min(effective_difficulty)` is the effective difficulty of the "least valuable" announcement
+that is being mined with.
+
+Lets assume that announcement miners are providing a steady supply of 1000 announcements per
+block-period and all announcements have an initial announcement difficulty of 128. The block mining
+software can choose to mine with 1000 announcements at 128 effective difficulty, or with 2000
+announcements at 64 effective difficulty, or with 3000 announcements at 32 effective difficulty and
+so on.
+
+![ann_selection.png](./ann_selection.png)
+
+The best choice is to use the previous _three_ block periods which provides a power multiplier that
+is 225% higher than that of using just the most recent 1 period worth of announcements. This curve
+is the same no matter what difficulty we are starting with.
+
+### Optimal Difficulty Curve
+
+Knowing that the optimal announcement set is all of those announcements mined over the past 3 block
+periods, we can compute the overall power of a pool as the announcement difficulty is raised.
+
+At announcement difficulty 1, announcements cannot be used for more than 1 block, but if we imagine
+that the announcement mining community can produce 1000 announcements per block at difficulty 1 then
+we can reason that the power multiplier will be `1000 ** 2` or 1 million.
+
+At difficulty 2 we can expect the announcement miners will produce 500 announcements per block period
+but since 2 block periods can be used, the power multiplier is the same.
+
+At difficulty 4, the announcement miners will produce 250 announcements per block period and they
+will be valid for 3 block periods making the power multiplier `750 ** 2` or 562,500.
+
+![ann_diff_power.png](./ann_diff_power.png)
+
+From here, the power output of the power multiplier of the optimal announcement set halves for each
+doubling of the announcement difficulty, making the optimal difficulty `2`.
